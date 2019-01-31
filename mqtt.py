@@ -11,7 +11,7 @@ brk_ip = '114.205.0.130'
 #brk_port = 1883
 brk_port = 8883
 brk_keepalive = 60
-tls_addr = '/home/zium/cjm/maeilDas/cacert.pem'
+tls_addr = '/home/zium/maeil/maeilDas/cacert.pem'
 
 
 mq_client = mqtt.Client()

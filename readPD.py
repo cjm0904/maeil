@@ -24,14 +24,14 @@ def readPDTemp(num):
 
 	elif num == 6:
 		registerPD = c.read_holding_registers(reg_addr=452, reg_nb=1)
-		registerTemp = c.read_holding_reigsters(reg_addr=424, reg_nb=3)
+		registerTemp = c.read_holding_registers(reg_addr=424, reg_nb=3)
 	else:
 		print("system error!")
-	param = num, round(time.time()), registerTemp[0], registerTemp[1], reigsterTemp[2], reigsterPD
+	param = num, round(time.time()), registerTemp[0]/10, registerTemp[1]/10, registerTemp[2]/10, registerPD[0]
 	if registerPD:
 		if registerTemp:
 			try:
-				with conn.cursur() as cursor:
+				with conn.cursor() as cursor:
 					cursor.execute(qry, param)
 					conn.commit()
 			except TypeError:
@@ -41,5 +41,7 @@ def readPDTemp(num):
 			print("reboot CAM-4 to get temperature")
 	else:
 		print("reboot CAM-4 to get PD")
+	c.close()
 
 	result = {'i':param[0], 'time':param[1], 'Temp_R':param[2], 'Temp_S':param[3], 'Temp_T':param[4], 'PD':param[5]}
+	return result
